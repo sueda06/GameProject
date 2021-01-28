@@ -10,9 +10,11 @@ namespace GameProject.Concrete
     class GameManager :IGameService
     {
         public MernisServiceAdapter _mernisServiceAdapter;
-        public GameManager(MernisServiceAdapter mernisServiceAdapter)
+        CampaignManager _campaignManager;
+        public GameManager(MernisServiceAdapter mernisServiceAdapter, CampaignManager campaignManager)
         {
             _mernisServiceAdapter = mernisServiceAdapter;
+            _campaignManager = campaignManager;
         }
         List<Game> games = new List<Game>();
         public void Add(Game game)
@@ -22,11 +24,21 @@ namespace GameProject.Concrete
             Console.ReadLine();
         }
 
-        public void Buy(Game game, Player player)
+        public void Buy(Game game, Campaign campaign, Player player)
         {
             if (_mernisServiceAdapter.CheckIfRealPerson(player))
             {
-                Console.WriteLine(player.FirstName + " isimli oyuncu için " + game.Name + " oyununu satın aldınız ");
+                foreach (var item in _campaignManager.campaigns)
+                {
+                    foreach (var item2 in games)
+                    {
+                        if (campaign.Id == item.Id && game.Name== item2.Name)
+                        {
+                            Console.WriteLine(player.FirstName + " isimli oyuncu için " + game.Name + " oyununu satın aldınız \n" +
+                        "Ödemeniz kampanya dahilinde " + (item2.Price - (item2.Price * item.DiscountRate)) + " TL");
+                        }
+                    }
+                }
             }
             else { throw new Exception("Not a valid person"); }
         }

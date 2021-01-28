@@ -8,7 +8,7 @@ namespace GameProject.Concrete
 {
     class CampaignManager : ICampaignService
     {
-        List<Campaign> campaigns = new List<Campaign>();
+        public List<Campaign> campaigns = new List<Campaign>();
         public void Add(Campaign campaign)
         {
             Console.WriteLine("Kampanya eklendi");
@@ -28,7 +28,7 @@ namespace GameProject.Concrete
             Console.WriteLine("---- Campaigns-----");
             foreach (var campaign in campaigns)
             {
-                Console.WriteLine(campaign.Id+" "+campaign.Name);
+                Console.WriteLine(campaign.Id+" "+campaign.Name+" "+campaign.DiscountRate);
             }
         }
 

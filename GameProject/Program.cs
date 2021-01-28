@@ -12,7 +12,7 @@ namespace GameProject
             bool exit = false;
             PlayerManager playerManager = new PlayerManager(new MernisServiceAdapter());
             CampaignManager campaignManager = new CampaignManager();
-            GameManager gameManager = new GameManager(new MernisServiceAdapter());
+            GameManager gameManager = new GameManager(new MernisServiceAdapter(), campaignManager);
             while (exit!= true)
             {
                 Console.WriteLine("---Menü-----");
@@ -63,32 +63,36 @@ namespace GameProject
                         Console.ReadLine();
                         break;
                     case 6:
-                        Console.WriteLine("Eklenecek olan kampanyanın ıd numarasını ve adını giriniz ");
+                        Console.WriteLine("Eklenecek olan kampanyanın ıd numarasını, adını ve indirim oranını giriniz ");
                         campaignManager.Add(new Campaign
                         {
                             Id = Convert.ToInt32(Console.ReadLine()),
                             Name = Console.ReadLine(),
+                            DiscountRate = Convert.ToDouble(Console.ReadLine())
                         });
                         break;
                     case 7:
-                        Console.WriteLine("Silinecek olan kampanya ıd numarasını ve adını giriniz");
+                        Console.WriteLine("Silinecek olan kampanya ıd numarasını, adını ve indirim oranını giriniz");
                         campaignManager.Delete(new Campaign
                         {
                             Id = Convert.ToInt32(Console.ReadLine()),
                             Name = Console.ReadLine(),
+                            DiscountRate = Convert.ToDouble(Console.ReadLine())
                         });
                         break;
                     case 8:
-                        Console.WriteLine("Önce güncellemek istediğiniz kampanyanın ıd numarasını ve adını " +
-                            "daha sonra güncellenmiş kampanyanın ıd numarasını ve adını giriniz");
+                        Console.WriteLine("Önce güncellemek istediğiniz kampanyanın ıd numarasını, adını ve indirim oranını " +
+                            "daha sonra güncellenmiş kampanyanın ıd numarasını, adını ve indirim oranını giriniz");
                         campaignManager.Update(new Campaign
                         {
                             Id = Convert.ToInt32(Console.ReadLine()),
                             Name = Console.ReadLine(),
+                            DiscountRate = Convert.ToDouble(Console.ReadLine())
                         }, new Campaign
                         {
                             Id = Convert.ToInt32(Console.ReadLine()),
                             Name = Console.ReadLine(),
+                            DiscountRate = Convert.ToDouble(Console.ReadLine())
                         });
                         break;
                     case 9:
@@ -129,10 +133,14 @@ namespace GameProject
                         });
                         break;
                     case 13:
-                        Console.WriteLine("Satın almak istediğiniz oyunun adını ve sırası ile Ad Soyad TC Doğum yılı bilgilerinizi giriniz ");
+                        campaignManager.List();
+                        Console.WriteLine("Satın almak istediğiniz oyunun adını, uygulamak istediğiniz kampanyanın Id numarasını ve sırası ile Ad Soyad TC Doğum yılı bilgilerinizi giriniz ");
                         gameManager.Buy(new Game
                         {
                             Name= Console.ReadLine()
+                        }, new Campaign
+                        {
+                            Id= Convert.ToInt32(Console.ReadLine())
                         }, new Player
                         {
                             FirstName = Console.ReadLine(),
